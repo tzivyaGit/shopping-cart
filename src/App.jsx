@@ -54,6 +54,22 @@ function App() {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
+// Calculate the total price
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+// Calculate shipping cost
+  const calculateShipping = () => {
+    return cart.length > 4 ? 10 : 0; 
+  };
+
+// Calculate the total price with shipping
+  const calculateTotal = () => {
+    return calculateTotalPrice() + calculateShipping();
+  };
+
+
 
   return (
     <div className="container mt-5">
@@ -79,7 +95,9 @@ function App() {
             )}
           </div>
         </div>
-        {/* אזור סיכום העגלה */}
+
+
+        {/*card*/}
         <div className="col-md-4">
           <div className="card p-3">
             <h4>Cart Summary</h4>
@@ -102,6 +120,13 @@ function App() {
             ) : (
               <p>No items in cart</p>
             )}
+             {/* סיכום המחיר */}
+             <div className="mt-3">
+              <p>Total Price: ${calculateTotalPrice().toFixed(2)}</p>
+              <p>Shipping: ${calculateShipping()}</p>
+              <hr />
+              <h5>Total: ${calculateTotal().toFixed(2)}</h5>
+            </div>
           </div>
         </div>
       </div>
