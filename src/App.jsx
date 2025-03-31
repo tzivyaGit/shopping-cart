@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -12,6 +14,11 @@ function App() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
+   // שמירה ב-localStorage בכל שינוי בעגלה
+   useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+  
   // Function to add a product to the cart
   const addToCart = (product) => {
     console.log(product);
@@ -120,7 +127,7 @@ function App() {
             ) : (
               <p>No items in cart</p>
             )}
-             {/* סיכום המחיר */}
+             {/* price*/}
              <div className="mt-3">
               <p>Total Price: ${calculateTotalPrice().toFixed(2)}</p>
               <p>Shipping: ${calculateShipping()}</p>
