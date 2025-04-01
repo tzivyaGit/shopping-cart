@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
